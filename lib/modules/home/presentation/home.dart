@@ -50,11 +50,18 @@ class _HomeFudoState extends State<HomeFudo> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      bottomNavigationBar: ValueListenableBuilder(
-          valueListenable: _indexSelectedBottomNavBarNotifier,
-          builder: (_, indexSelectedBottomNavBar, Widget? w) {
-            return BottomNavigationBar(
+    return ValueListenableBuilder(
+        valueListenable: _indexSelectedBottomNavBarNotifier,
+        builder: (_, indexSelectedBottomNavBar, Widget? w) {
+          return Scaffold(
+            floatingActionButton:
+                indexSelectedBottomNavBar == _postsTabBottomNavBarSelected
+                    ? FloatingActionButton(
+                        onPressed: () {},
+                        child: const Icon(Icons.add),
+                      )
+                    : Container(),
+            bottomNavigationBar: BottomNavigationBar(
               onTap: (int indexSelected) {
                 _indexSelectedBottomNavBarNotifier.value = indexSelected;
               },
@@ -66,20 +73,20 @@ class _HomeFudoState extends State<HomeFudo> {
                 BottomNavigationBarItem(
                     icon: Icon(Icons.post_add), label: "Posts"),
               ],
-            );
-          }),
-      body: SafeArea(
-          child: ValueListenableBuilder(
-              valueListenable: _indexSelectedBottomNavBarNotifier,
-              builder: (_, indexTabBottomNavBarSelected, Widget? w) {
-                return IndexedStack(
-                  index: indexTabBottomNavBarSelected,
-                  children: const [
-                    UsersSubPage(),
-                    PostPage(),
-                  ],
-                );
-              })),
-    );
+            ),
+            body: SafeArea(
+                child: ValueListenableBuilder(
+                    valueListenable: _indexSelectedBottomNavBarNotifier,
+                    builder: (_, indexTabBottomNavBarSelected, Widget? w) {
+                      return IndexedStack(
+                        index: indexTabBottomNavBarSelected,
+                        children: const [
+                          UsersSubPage(),
+                          PostPage(),
+                        ],
+                      );
+                    })),
+          );
+        });
   }
 }
