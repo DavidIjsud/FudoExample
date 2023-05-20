@@ -8,32 +8,20 @@
             "name": "DEV",
             "request": "launch",
             "type": "dart",
-            "program": "lib/environments/main_dev.dart",
-            "args": [
-                "--flavor",
-                "dev"
-            ]
+            "program": "lib/environments/main_dev.dart"
         },
         {
             "name": "PROFILE",
             "request": "launch",
             "type": "dart",
             "program": "lib/environments/main_prod.dart",
-            "args": [
-                "--flavor",
-                "prod"
-            ]
         },
         {
             "name": "PROD",
             "request": "launch",
             "type": "dart",
             "program": "lib/environments/main_prod.dart",
-            "args": [
-                "--flavor",
-                "prod"
-            ],
             "flutterMode": "release"
-        },
+        }
     ]
 }

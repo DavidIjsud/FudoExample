@@ -11,7 +11,7 @@ import 'package:http/http.dart' as http;
 class PostUserServiceImpl implements PostUserService {
   @override
   Future<List<PostDto>> getPosts() async {
-    String url = "${NetworkUtils.host}/posts";
+    String url = "${NetworkUtils.host}posts";
     Uri uri = Uri.parse(url);
     http.Response result;
     try {
@@ -33,7 +33,7 @@ class PostUserServiceImpl implements PostUserService {
 
   @override
   Future<List<UserDto>> getUsers() async {
-    String url = "${NetworkUtils.host}/users";
+    String url = "${NetworkUtils.host}users";
     Uri uri = Uri.parse(url);
     http.Response result;
     try {

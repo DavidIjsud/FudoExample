@@ -1,6 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:fudo_test/components/network/network.impl.dart';
 import 'package:fudo_test/environments/enviroment.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:fudo_test/modules/home/data/repository/posts_users.repository.impl.dart';
+import 'package:fudo_test/modules/home/data/service/posts_users.service.impl.dart';
+import 'package:fudo_test/modules/home/domain/usescases/getposts/get_posts.usecase.impl.dart';
+import 'package:fudo_test/modules/home/domain/usescases/getusers/get_users.impl.usecase.dart';
+import 'package:fudo_test/modules/home/presentation/bloc/home_bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fudo_test/modules/home/presentation/home.dart';
 
 void initApp(AppEnvironment environment) async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,10 +40,24 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Presto Latam',
-      debugShowCheckedModeBanner: false,
-      home: Container(),
+    final PostsUsersRepositoryImpl postUserServiceRepository =
+        PostsUsersRepositoryImpl(
+            postUserService: PostUserServiceImpl(),
+            networkUtilsAbstract: NetworkUtils());
+
+    return BlocProvider(
+      create: (context) => HomeBloc(
+        getPostsUseCase: GetPostsUseCaseImpl(
+            postsUsersRepository: postUserServiceRepository),
+        getUsersUseCase: GetUsersUseCaseImpl(
+          postsUsersRepository: postUserServiceRepository,
+        ),
+      ),
+      child: const MaterialApp(
+        title: 'Presto Latam',
+        debugShowCheckedModeBanner: false,
+        home: HomeFudo(),
+      ),
     );
   }
 }
