@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:fudo_test/components/network/network.dart';
-import 'package:fudo_test/exceptions/no_internet_exception.dart';
+import 'package:fudo_test/exceptions/not_internet_exception.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class NetworkUtils implements NetworkUtilsAbstract {

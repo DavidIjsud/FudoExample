@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:fudo_test/components/network/network.impl.dart';
 import 'package:fudo_test/exceptions/failed_on_request_api_exception.dart';
-import 'package:fudo_test/exceptions/no_internet_exception.dart';
+import 'package:fudo_test/exceptions/slow_internet_exception.dart';
 import 'package:fudo_test/modules/home/data/dtos/user.dto.dart';
 import 'package:fudo_test/modules/home/data/dtos/post.dto.dart';
 import 'package:fudo_test/modules/home/data/service/posts_users.service.dart';
@@ -20,7 +20,7 @@ class PostUserServiceImpl implements PostUserService {
         uri,
       )
           .timeout(const Duration(seconds: 10), onTimeout: () async {
-        throw NoInternetException();
+        throw SlowInternetException();
       });
     } catch (_) {
       throw FailedOnRequestApiException(urlFailed: url);
@@ -42,7 +42,7 @@ class PostUserServiceImpl implements PostUserService {
         uri,
       )
           .timeout(const Duration(seconds: 120), onTimeout: () async {
-        throw NoInternetException();
+        throw SlowInternetException();
       });
     } catch (_) {
       throw FailedOnRequestApiException(urlFailed: url);

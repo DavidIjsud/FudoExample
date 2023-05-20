@@ -1,0 +1,1 @@
+class SlowInternetException implements Exception {}
