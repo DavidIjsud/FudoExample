@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:fudo_test/components/reporter_error_network/reporter_error_connection.dart';
 import 'package:fudo_test/modules/creation_post/presentation/post.page.dart';
 import 'package:fudo_test/modules/home/presentation/bloc/events/posts_events.dart';
