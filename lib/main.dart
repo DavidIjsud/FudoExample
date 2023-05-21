@@ -1,7 +1,9 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:fudo_test/components/network/network.impl.dart';
 import 'package:fudo_test/environments/enviroment.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:fudo_test/modules/home/data/local_data/local_data.impl.dart';
 import 'package:fudo_test/modules/home/data/repository/posts_users.repository.impl.dart';
 import 'package:fudo_test/modules/home/data/service/posts_users.service.impl.dart';
 import 'package:fudo_test/modules/home/domain/usescases/getposts/get_posts.usecase.impl.dart';
@@ -42,8 +44,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final PostsUsersRepositoryImpl postUserServiceRepository =
         PostsUsersRepositoryImpl(
-            postUserService: PostUserServiceImpl(),
-            networkUtilsAbstract: NetworkUtils());
+      postUserService: PostUserServiceImpl(),
+      networkUtilsAbstract: NetworkUtils(
+        connectivity: Connectivity(),
+      ),
+      localDataUsersPosts: LocalDataUsersPostsImpl(),
+    );
 
     return BlocProvider(
       create: (context) => HomeBloc(

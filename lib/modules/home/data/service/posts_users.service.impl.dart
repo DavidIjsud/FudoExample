@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'dart:developer';
+import 'dart:io';
 
 import 'package:fudo_test/components/network/network.impl.dart';
 import 'package:fudo_test/exceptions/failed_on_request_api_exception.dart';
@@ -13,18 +15,17 @@ class PostUserServiceImpl implements PostUserService {
   Future<List<PostDto>> getPosts() async {
     String url = "${NetworkUtils.host}posts";
     Uri uri = Uri.parse(url);
+
     http.Response result;
-    try {
-      result = await http
-          .get(
-        uri,
-      )
-          .timeout(const Duration(seconds: 10), onTimeout: () async {
-        throw SlowInternetException();
-      });
-    } catch (_) {
-      throw FailedOnRequestApiException(urlFailed: url);
-    }
+
+    result = await http
+        .get(
+      uri,
+    )
+        .timeout(const Duration(seconds: 1), onTimeout: () async {
+      log("Slow internet");
+      throw SlowInternetException();
+    });
 
     return List.from(json.decode(result.body))
         .map((user) => PostDto.fromJson(user))
@@ -36,17 +37,15 @@ class PostUserServiceImpl implements PostUserService {
     String url = "${NetworkUtils.host}users";
     Uri uri = Uri.parse(url);
     http.Response result;
-    try {
-      result = await http
-          .get(
-        uri,
-      )
-          .timeout(const Duration(seconds: 120), onTimeout: () async {
-        throw SlowInternetException();
-      });
-    } catch (_) {
-      throw FailedOnRequestApiException(urlFailed: url);
-    }
+
+    result = await http
+        .get(
+      uri,
+    )
+        .timeout(const Duration(seconds: 1), onTimeout: () async {
+      log("Slow internet");
+      throw SlowInternetException();
+    });
 
     return List.from(json.decode(result.body))
         .map((user) => UserDto.fromJson(user))

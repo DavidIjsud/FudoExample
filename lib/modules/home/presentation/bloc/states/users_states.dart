@@ -11,8 +11,4 @@ class UsersGotSuccessfull implements UsersStates {
 
 class LoadingUsers implements UsersStates {}
 
-class SlowInternetUsersState implements UsersStates {}
-
-class NoInternetUsersState implements UsersStates {}
-
 class UnknowErrorUsers implements UsersStates {}

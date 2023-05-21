@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:fudo_test/components/reporter_error_network/reporter_error_connection.dart';
 import 'package:fudo_test/modules/home/presentation/bloc/events/posts_events.dart';
 import 'package:fudo_test/modules/home/presentation/bloc/events/users_events.dart';
 import 'package:fudo_test/modules/home/presentation/bloc/home_bloc.dart';
@@ -27,7 +28,24 @@ class _HomeFudoState extends State<HomeFudo> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _listenToTabSelectedBottomNavBar();
       _requestUsersAsDefault();
+      _listenMessageFromConnectivity();
     });
+  }
+
+  _listenMessageFromConnectivity() {
+    ReporterErrorConnection.instance.getStreamReporter().listen((message) {
+      if (message.isNotEmpty) {
+        _showSnackBar(message, Colors.red);
+      }
+    });
+  }
+
+  _showSnackBar(String message, Color backgroundColor) {
+    ScaffoldMessenger.of(context).clearMaterialBanners();
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text(message),
+      backgroundColor: backgroundColor,
+    ));
   }
 
   _requestUsersAsDefault() {

@@ -11,8 +11,4 @@ class PostsGotSuccessfull implements PostsStates {
 
 class LoadingPosts implements PostsStates {}
 
-class SlowInternetPostsState implements PostsStates {}
-
-class NoInternetPostsState implements PostsStates {}
-
 class UnknownErrorPosts implements PostsStates {}

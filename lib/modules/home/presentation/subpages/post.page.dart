@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fudo_test/modules/home/presentation/bloc/events/posts_events.dart';
 import 'package:fudo_test/modules/home/presentation/bloc/home_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fudo_test/modules/home/presentation/bloc/states/posts_states.dart';
@@ -14,10 +15,7 @@ class _MyWidgetState extends State<PostPage> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<HomeBloc, HomeState>(
-      listenWhen: (previous, current) =>
-          current is SlowInternetPostsState ||
-          current is NoInternetPostsState ||
-          current is UnknownErrorPosts,
+      listenWhen: (previous, current) => current is UnknownErrorPosts,
       listener: (_, state) {
         if (state is UnknownErrorPosts) {
           ScaffoldMessenger.of(context).clearSnackBars();
@@ -29,46 +27,46 @@ class _MyWidgetState extends State<PostPage> {
             backgroundColor: Colors.red,
           ));
         }
-        if (state is NoInternetPostsState) {
-          ScaffoldMessenger.of(context).clearSnackBars();
-          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-            content: Text(
-              "Conectate a internet",
-              style: TextStyle(color: Colors.white),
-            ),
-            backgroundColor: Colors.red,
-          ));
-        }
-        if (state is SlowInternetPostsState) {
-          ScaffoldMessenger.of(context).clearSnackBars();
-          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-            content: Text(
-              "Parece que tu internet anda lento",
-              style: TextStyle(color: Colors.white),
-            ),
-            backgroundColor: Colors.red,
-          ));
-        }
       },
       buildWhen: (previous, current) =>
           current is LoadingPosts || current is PostsGotSuccessfull,
       builder: (context, state) {
         if (state is PostsGotSuccessfull) {
-          return ListView.builder(
-              itemCount: state.posts.length,
-              itemBuilder: (_, indexInPostList) {
-                return ListTile(
-                  title: Text(state.posts[indexInPostList].title),
-                  subtitle: Text(state.posts[indexInPostList].body),
-                );
+          return RefreshIndicator(
+              child: ListView.builder(
+                  itemCount: state.posts.length,
+                  itemBuilder: (_, indexInPostList) {
+                    return ListTile(
+                      title: Text(state.posts[indexInPostList].title),
+                      subtitle: Text(state.posts[indexInPostList].body),
+                    );
+                  }),
+              onRefresh: () {
+                context.read<HomeBloc>().add(OnGetPosts());
+                return Future.value();
               });
         }
         return SizedBox(
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
-          child: const Center(
-            child: CircularProgressIndicator(),
-          ),
+          child: RefreshIndicator(
+              child: ListView(
+                children: [
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height,
+                    child: const Center(
+                      child: SizedBox(
+                        child: CircularProgressIndicator(),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+              onRefresh: () {
+                context.read<HomeBloc>().add(OnGetPosts());
+                return Future.value();
+              }),
         );
       },
     );
