@@ -10,7 +10,7 @@ import 'package:fudo_test/modules/home/domain/usescases/getposts/get_posts.useca
 import 'package:fudo_test/modules/home/domain/usescases/getusers/get_users.impl.usecase.dart';
 import 'package:fudo_test/modules/home/presentation/bloc/home_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fudo_test/modules/home/presentation/home.dart';
+import 'package:fudo_test/modules/login/presentation/login.page.dart';
 
 void initApp(AppEnvironment environment) async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -62,7 +62,7 @@ class MyApp extends StatelessWidget {
       child: const MaterialApp(
         title: 'Presto Latam',
         debugShowCheckedModeBanner: false,
-        home: HomeFudo(),
+        home: LoginPage(),
       ),
     );
   }

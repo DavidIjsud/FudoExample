@@ -41,7 +41,7 @@ class _HomeFudoState extends State<HomeFudo> {
   }
 
   _showSnackBar(String message, Color backgroundColor) {
-    ScaffoldMessenger.of(context).clearMaterialBanners();
+    ScaffoldMessenger.of(context).clearSnackBars();
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text(message),
       backgroundColor: backgroundColor,
