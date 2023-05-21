@@ -1,16 +1,6 @@
-# fudo_test
+- Para correr la aplicación usar el siguiente comando en el root del proyecto: 
+flutter run --target=lib/environments/main_dev.dart
 
-A new Flutter project.
+ó utilizando vscode en seccion Run and Debug.
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- en el root del proyecto existe un archivo .apk (app-fudo.apk) para su descarga e instalacion de manera mas rapida en telefonos android.
