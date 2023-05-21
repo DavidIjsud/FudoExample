@@ -1,9 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
-import 'dart:io';
 
 import 'package:fudo_test/components/network/network.impl.dart';
-import 'package:fudo_test/exceptions/failed_on_request_api_exception.dart';
 import 'package:fudo_test/exceptions/slow_internet_exception.dart';
 import 'package:fudo_test/modules/home/data/dtos/user.dto.dart';
 import 'package:fudo_test/modules/home/data/dtos/post.dto.dart';

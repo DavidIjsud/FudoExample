@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:fudo_test/exceptions/failed_on_request_api_exception.dart';
-import 'package:fudo_test/exceptions/slow_internet_exception.dart';
+
 import 'package:fudo_test/modules/home/domain/usescases/getposts/get_posts.usecase.dart';
 import 'package:fudo_test/modules/home/domain/usescases/getusers/get_users.usecase.dart';
 import 'package:fudo_test/modules/home/presentation/bloc/events/posts_events.dart';
@@ -30,8 +29,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       emit(PostsGotSuccessfull(
         posts: await getPostsUseCase.getPostUseCase(),
       ));
-    } on FailedOnRequestApiException catch (_) {
-      emit(UnknownErrorPosts());
     } catch (e) {
       emit(UnknownErrorPosts());
     }
@@ -43,8 +40,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       emit(UsersGotSuccessfull(
         users: await getUsersUseCase.getUsers(),
       ));
-    } on FailedOnRequestApiException catch (_) {
-      emit(UnknowErrorUsers());
     } catch (e) {
       emit(UnknowErrorUsers());
     }

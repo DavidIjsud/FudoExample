@@ -20,8 +20,8 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   bool _areCredentialsCorrect() {
-    String user = _userControllerTextEditing.value.text;
-    String password = _passwordControllerTextEditing.value.text;
+    String user = _userControllerTextEditing.value.text.trim();
+    String password = _passwordControllerTextEditing.value.text.trim();
     return user.isNotEmpty &&
         user == "challenge@fudo" &&
         password.isNotEmpty &&

@@ -3,6 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:fudo_test/components/network/network.impl.dart';
 import 'package:fudo_test/environments/enviroment.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:fudo_test/modules/creation_post/data/repository/creation_post.impl.dart';
+import 'package:fudo_test/modules/creation_post/data/service/add_post.impl.service.dart';
+import 'package:fudo_test/modules/creation_post/domain/usecases/add_new_post.usecase.impl.dart';
+import 'package:fudo_test/modules/creation_post/presentation/bloc/post_bloc.dart';
 import 'package:fudo_test/modules/home/data/local_data/local_data.impl.dart';
 import 'package:fudo_test/modules/home/data/repository/posts_users.repository.impl.dart';
 import 'package:fudo_test/modules/home/data/service/posts_users.service.impl.dart';
@@ -42,28 +46,44 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final NetworkUtils networkUtils = NetworkUtils(
+      connectivity: Connectivity(),
+    );
+
     final PostsUsersRepositoryImpl postUserServiceRepository =
         PostsUsersRepositoryImpl(
       postUserService: PostUserServiceImpl(),
-      networkUtilsAbstract: NetworkUtils(
-        connectivity: Connectivity(),
-      ),
+      networkUtilsAbstract: networkUtils,
       localDataUsersPosts: LocalDataUsersPostsImpl(),
     );
 
-    return BlocProvider(
-      create: (context) => HomeBloc(
-        getPostsUseCase: GetPostsUseCaseImpl(
-            postsUsersRepository: postUserServiceRepository),
-        getUsersUseCase: GetUsersUseCaseImpl(
-          postsUsersRepository: postUserServiceRepository,
-        ),
-      ),
-      child: const MaterialApp(
-        title: 'Presto Latam',
-        debugShowCheckedModeBanner: false,
-        home: LoginPage(),
-      ),
-    );
+    return MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (context) => PostBloc(
+              newPostUseCase: NewPostUseCaseImpl(
+                postCreation: PostCreationImpl(
+                    postService: PostServiceImpl(),
+                    networkUtilsAbstract: networkUtils),
+              ),
+            ),
+            child: Container(),
+          ),
+          BlocProvider(
+            create: (context) => HomeBloc(
+              getPostsUseCase: GetPostsUseCaseImpl(
+                  postsUsersRepository: postUserServiceRepository),
+              getUsersUseCase: GetUsersUseCaseImpl(
+                postsUsersRepository: postUserServiceRepository,
+              ),
+            ),
+            child: Container(),
+          )
+        ],
+        child: const MaterialApp(
+          title: 'Presto Latam',
+          debugShowCheckedModeBanner: false,
+          home: LoginPage(),
+        ));
   }
 }

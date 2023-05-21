@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:fudo_test/components/reporter_error_network/reporter_error_connection.dart';
+import 'package:fudo_test/modules/creation_post/presentation/post.page.dart';
 import 'package:fudo_test/modules/home/presentation/bloc/events/posts_events.dart';
 import 'package:fudo_test/modules/home/presentation/bloc/events/users_events.dart';
 import 'package:fudo_test/modules/home/presentation/bloc/home_bloc.dart';
@@ -72,13 +72,17 @@ class _HomeFudoState extends State<HomeFudo> {
         valueListenable: _indexSelectedBottomNavBarNotifier,
         builder: (_, indexSelectedBottomNavBar, Widget? w) {
           return Scaffold(
-            floatingActionButton:
-                indexSelectedBottomNavBar == _postsTabBottomNavBarSelected
-                    ? FloatingActionButton(
-                        onPressed: () {},
-                        child: const Icon(Icons.add),
-                      )
-                    : Container(),
+            floatingActionButton: indexSelectedBottomNavBar ==
+                    _postsTabBottomNavBarSelected
+                ? FloatingActionButton(
+                    onPressed: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (_) {
+                        return const PagePostAdd();
+                      }));
+                    },
+                    child: const Icon(Icons.add),
+                  )
+                : Container(),
             bottomNavigationBar: BottomNavigationBar(
               onTap: (int indexSelected) {
                 _indexSelectedBottomNavBarNotifier.value = indexSelected;
