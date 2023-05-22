@@ -20,7 +20,7 @@ class PostUserServiceImpl implements PostUserService {
         .get(
       uri,
     )
-        .timeout(const Duration(seconds: 1), onTimeout: () async {
+        .timeout(const Duration(seconds: 10), onTimeout: () async {
       log("Slow internet");
       throw SlowInternetException();
     });
@@ -40,7 +40,7 @@ class PostUserServiceImpl implements PostUserService {
         .get(
       uri,
     )
-        .timeout(const Duration(seconds: 1), onTimeout: () async {
+        .timeout(const Duration(seconds: 10), onTimeout: () async {
       log("Slow internet");
       throw SlowInternetException();
     });
